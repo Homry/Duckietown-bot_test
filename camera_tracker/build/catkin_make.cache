@@ -1,0 +1,2 @@
+ip_camera:tracker
+-DCATKIN_DEVEL_PREFIX=/home/homry/Projects/Robots/camera_tracker/devel -DCMAKE_INSTALL_PREFIX=/home/homry/Projects/Robots/camera_tracker/install -G Unix Makefiles

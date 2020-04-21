@@ -1,0 +1,14 @@
+<launch>
+
+	<arg name="url"/>
+
+	<include file="$(find ip_camera)/launch/ip_camera.launch">
+		<arg name="url" value="$(arg url)"/>
+	</include>
+
+	<arg name="size"/>
+
+	<include file="$(find tracker)/launch/tracker.launch">
+		<arg name="size" value="$(arg size)"/>
+	</include>
+</launch>

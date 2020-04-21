@@ -1,0 +1,8 @@
+prefix=/home/homry/Projects/Robots/camera_tracker/install
+
+Name: tracker
+Description: Description of tracker
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
