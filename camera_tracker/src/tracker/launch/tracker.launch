@@ -1,7 +1,6 @@
 <launch>
-	<arg name="size"/>
+	
 	<node name="tracker" pkg="tracker" type="tracker.py" output="screen" required="true">
-	<param name="size" value="$(arg size)" />
-	</node>
+	
 </launch>
 
