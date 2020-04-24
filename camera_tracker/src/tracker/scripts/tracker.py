@@ -1,22 +1,33 @@
 #!/usr/bin/env python
+import cv2
 import cv2.aruco as aruco
 import rospy
 import numpy as np
 from sensor_msgs.msg import Image
 
 MARKER_TYPE = aruco.DICT_5X5_250
+CameraMtx = [682.42294095, 0.0, 469.948484581, 0.0, 681.44128234, 333.951368692, 0.0, 0.0, 1.0]
+DistortionCoeff = [0.0692332572094, -0.170327984628, 0.00436794532634, 0.00496921804668, 0.0]
+markerLength = 0.1
 
-def tracker(image_sub):
-    CameraMtx = [682.42294095, 0.0, 469.948484581, 0.0, 681.44128234, 333.951368692, 0.0, 0.0, 1.0]
-    DistortionCoeff = [0.0692332572094, -0.170327984628, 0.00436794532634, 0.00496921804668, 0.0]
-    markerLength = 0.1
+def bgr_from_jpg(data):
+    s = np.fromstring(data, np.uint8)
+    bgr = cv2.imdecode(s, cv2.IMREAD_COLOR)
+    if bgr is None:
+        msg = 'Could not decode image (cv2.imdecode returned None). '
+        msg += 'This is usual a sign of data corruption.'
+        raise ValueError(msg)
+    return bgr
+
+def tracker(image_msg):
+    cv_img = bgr_from_jpg(image_msg.data)
     arucoDictionacy = aruco.Dictionary_get(MARKER_TYPE)
     parameters = aruco.DetectorParameters_create()
     #image_sub = np.array(image_sub)
-    corners, ids, rejectedImgPoints = aruco.detectMarkers(image_sub, arucoDictionacy, parameters=parameters, cameraMatrix=CameraMtx, distCoeff=DistortionCoeff)
+    corners, ids, rejectedImgPoints = aruco.detectMarkers(cv_img, arucoDictionacy, parameters=parameters, cameraMatrix=CameraMtx, distCoeff=DistortionCoeff)
     for j in range(0, len(ids)):
         rvec, tvec, objPoints = aruco.estimatePoseSingleMarkers(corners[j], markerLength, CameraMtx, DistortionCoeff)
-        aruco.drawDetectedMarkers(image_sub, corners, ids)
+        aruco.drawDetectedMarkers(cv_img, corners, ids)
         aruco.drawAxis(image_sub, CameraMtx, DistortionCoeff, rvec, tvec, 0.1)
 
 
