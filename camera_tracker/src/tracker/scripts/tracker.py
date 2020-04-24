@@ -10,13 +10,16 @@ CameraMtx = [682.42294095, 0.0, 469.948484581, 0.0, 681.44128234, 333.951368692,
 DistortionCoeff = [0.0692332572094, -0.170327984628, 0.00436794532634, 0.00496921804668, 0.0]
 markerLength = 0.1
 
-def bgr_from_jpg(data):
-    s = np.fromstring(data, np.uint8)
-    bgr = cv2.imdecode(s, cv2.IMREAD_COLOR)
-    if bgr is None:
-        msg = 'Could not decode image (cv2.imdecode returned None). '
-        msg += 'This is usual a sign of data corruption.'
-        raise ValueError(msg)
+def bgr_from_jpg(image_msg):
+#Специально для теста передаю только в эту функцию
+    print(type(image_msg)) 
+    s = np.fromstring(image_msg.data, np.uint8)   #поле дата конверитровать в список
+    bgr = cv2.imdecode(s, cv2.IMREAD_COLOR)    #декодировать спиок
+    print(type(bgr))  #в итоге получается пустой тип
+    ##if bgr is None:
+      ##  msg = 'Could not decode image (cv2.imdecode returned None). '
+       ## msg += 'This is usual a sign of data corruption.'
+       ## raise ValueError(msg)
     return bgr
 
 def tracker(image_msg):
@@ -37,6 +40,6 @@ if __name__ == '__main__':
     #DistortionCoeff = [0.0692332572094, -0.170327984628, 0.00436794532634, 0.00496921804668, 0.0]
     rospy.init_node('tracker')
     #markerLength = rospy.get_param('~size')
-    image_sub = rospy.Subscriber("camera_image", Image, tracker)
+    image_sub = rospy.Subscriber("camera_image", Image, bgr_from_jpg)
 
     rospy.spin()
