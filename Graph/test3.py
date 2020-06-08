@@ -41,7 +41,7 @@ def main():
     optimizer = add_edge(optimizer, [2, 3], g2o.Isometry3d(np.identity(3), [3, 0, 0]))
     optimizer = add_edge(optimizer, [0, 1], g2o.Isometry3d(np.identity(3), [3, 0, 0]))
     optimizer = add_edge(optimizer, [0, 2], g2o.Isometry3d(np.identity(3), [5, 0, 0]))
-    optimizer = add_edge(optimizer, [2, 3], g2o.Isometry3d(np.identity(3), [4, 0, 0]))
+    optimizer = add_edge(optimizer, [1, 2], g2o.Isometry3d(np.identity(3), [4, 0, 0]))
 
     optimizer.initialize_optimization()
     optimizer.set_verbose(True)
