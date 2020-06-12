@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import cv2
-from geometry_msgs.msg import Vector3
+#from geometry_msgs.msg import Vector3
 import cv2.aruco as aruco
 import rospy
 import numpy as np
 import math
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+from std_msgs.msg import Float64MultiArray
 
 
 
@@ -46,13 +47,17 @@ def dist(data1, data2):
 
 
 def publ(edge):
-    edgeVector = Vector3
-    edgeVector.x = edge[0]
-    edgeVector.y = edge[1]
-    edgeVector.z = edge[2]
+    edgeVector = Float64MultiArray()
+    edgeVector.data = []
+    edgeVector.data.append(edge[0])
+    edgeVector.data.append(edge[1])
+    edgeVector.data.append(edge[2])
+
     print(1)
+    print(edgeVector.data)
     pub.publish(edgeVector)
     print(2)
+    rospy.sleep(10)
 
 def tracker(image_msg):
     cv_img = from_ImageMsg_to_cvImage(image_msg)
@@ -99,7 +104,7 @@ def tracker(image_msg):
 
 if __name__ == '__main__':
     rospy.init_node('tracker')
-    pub = rospy.Publisher('vector', Vector3, queue_size=10)
+    pub = rospy.Publisher('vector', Float64MultiArray, queue_size=10)
     sub = rospy.Subscriber("camera_image", Image, tracker)
 
     rospy.spin()
