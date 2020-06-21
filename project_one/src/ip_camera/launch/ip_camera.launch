@@ -1,0 +1,7 @@
+<launch>
+	<arg name="url"/>
+	<node name="ip_camera" pkg="ip_camera" type="ip_camera.py" output="screen" required="true">
+	<param name="url" value="$(arg url)" />
+	</node>
+</launch>
+
