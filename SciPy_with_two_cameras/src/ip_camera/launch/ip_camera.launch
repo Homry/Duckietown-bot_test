@@ -1,0 +1,16 @@
+<launch>
+	<arg name="url1"/>
+	<node name="ip_cameraOne" pkg="ip_camera" type="ip_camera.py" output="screen" required="true">
+	<remap from="camera_image" to="camera_image_one"/>
+	<remap from="~url" to="~url1"/>
+	<param name="url1" value="$(arg url1)" />
+	</node>
+
+	<arg name="url2"/>
+	<node name="ip_cameraTwo" pkg="ip_camera" type="ip_camera.py" output="screen" required="true">
+	<remap from="camera_image" to="camera_image_two"/>
+	<remap from="~url" to="~url2"/>
+	<param name="url2" value="$(arg url2)" />
+	</node>
+</launch>
+

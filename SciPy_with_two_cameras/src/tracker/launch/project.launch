@@ -1,0 +1,20 @@
+<launch>
+
+	<arg name="url1"/>
+	<arg name="url2"/>
+	<include file="$(find ip_camera)/launch/ip_camera.launch">
+		<arg name="url1" value="$(arg url1)"/>
+		<arg name="url2" value="$(arg url2)"/>
+	</include>
+
+	
+
+	<include file="$(find tracker)/launch/tracker.launch">
+	</include>
+
+	<include file="$(find equations)/launch/equations.launch">
+	</include>
+	
+	<include file="$(find distance)/launch/distance.launch">
+	</include>
+</launch>

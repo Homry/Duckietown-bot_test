@@ -1,0 +1,15 @@
+<launch>
+
+	<node name="trackerOne" pkg="tracker" type="tracker.py" output="screen" required="true">
+	<remap from="camera_image" to="camera_image_one"/>
+	<remap from="markers" to="markerFromCamOne"/>
+	<remap from="tracker" to="camera_one"/>
+	</node>
+
+	<node name="trackerTwo" pkg="tracker" type="tracker.py" output="screen" required="true">
+	<remap from="camera_image" to="camera_image_two"/>
+	<remap from="markers" to="markerFromCamTwo"/>
+	<remap from="tracker" to="camera_two"/>
+	</node>
+</launch>
+
